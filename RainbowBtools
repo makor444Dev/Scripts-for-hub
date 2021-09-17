@@ -1,0 +1,163 @@
+local PARENT
+if game:GetService("CoreGui"):FindFirstChild("RobloxGui") then
+	PARENT = game:GetService("CoreGui").RobloxGui
+else
+	PARENT = game:GetService("CoreGui")
+end
+
+_G.Mode = 1
+
+_G.RainbowGlow = true -- Set to false if you dont want a rainbow effect.
+
+function randomString()
+    local length = math.random(20,40)
+    local array = {}
+    for i = 1, length do
+        array[i] = string.char(math.random(32, 126))
+    end
+    return table.concat(array)
+end
+
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local Tool = Instance.new("Tool", LocalPlayer.Backpack)
+local Mouse = LocalPlayer:GetMouse()
+local Target = Mouse.Target
+local Folder = Instance.new("Folder", game)
+
+local Equipped = false
+local Mouse = LocalPlayer:GetMouse()
+Folder.Name = randomString()
+
+local ViewingBox = Instance.new("SelectionBox")
+ViewingBox.Color3 = Color3.fromRGB(220, 20, 60)
+ViewingBox.Parent = PARENT
+ViewingBox.LineThickness = 0.1
+ViewingBox.Name = randomString()
+
+local StarterGui = game:GetService("StarterGui")
+
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, true)
+
+Tool.RequiresHandle = false
+Tool.RobloxLocked = true
+Tool.Name = "DTools - "..randomString()
+Tool.Activated:Connect(function()
+    local Target = Mouse.Target
+    Tool.Name = "DTools - "..randomString()
+    if _G.Mode == 1 then
+        Target.Parent = game
+    elseif _G.Mode == 2 then
+        Target.Parent = Folder
+    elseif _G.Mode == 3 then
+        Target.CanCollide = false
+        Target.Anchored = true
+        Target.Transparency = 1
+    elseif _G.Mode == 4 then
+        Target.Parent = nil
+    elseif _G.Mode == 5 then
+        Target.CFrame = CFrame.new(999999999, 999999999, 999999999)
+        Target.Position = Vector3.new(999999999, 999999999, 999999999)
+    elseif _G.Mode == 6 then
+        Target.RobloxLocked = true
+        Target.Parent = nil
+    elseif _G.Mode == 7 then
+        Target.Name = randomString()
+        Target.Parent = nil
+    elseif _G.Mode == 8 then
+        local Model = Instance.new("Model", game)
+        Target.Parent = Model
+        Model:Destroy()
+    elseif _G.Mode == 9 then
+        Target.Parent = LocalPlayer.Character
+        LocalPlayer.Character:BreakJoints()
+     elseif _G.Mode == 10 then
+        Target.Size = Vector3.new(0, 0, 0)
+     elseif _G.Mode == 11 then
+        Target:Destroy()
+     elseif _G.Mode == 12 then
+        Target.Parent = PARENT
+    end
+end)
+
+Tool.Equipped:Connect(function()
+Equipped = true
+end)
+
+Tool.Unequipped:Connect(function()
+	ViewingBox.Adornee = nil
+	Equipped = false
+end)
+
+Mouse.Move:connect(function()
+if Equipped then
+	local Target = Mouse.Target
+	if not Target then
+       ViewingBox.Adornee = nil 
+	else 
+		if Target:IsA("BasePart") then 
+			ViewingBox.Adornee = Target
+		else
+           ViewingBox.Adornee = nil 
+		end 
+	end 
+end 
+end)
+
+wait()
+
+UnlockTool = Instance.new("Tool")
+UnlockTool.Parent = LocalPlayer.Backpack
+UnlockTool.RequiresHandle = false
+UnlockTool.Name = "Unlock - "..randomString()
+UnlockTool.RobloxLocked = true
+UnlockTool.Activated:connect(function()
+    UnlockTool.Name = "Unlock - "..randomString()
+    if Mouse.Target:IsA("BasePart") then
+        Mouse.Target.Locked = false
+    end
+end)
+
+UnlockTool.Equipped:Connect(function()
+Equipped = true
+end)
+
+UnlockTool.Unequipped:Connect(function()
+	ViewingBox.Adornee = nil
+	Equipped = false
+end)
+
+while _G.RainbowGlow do
+    for i = 0,1,0.01 do
+        ViewingBox.Color3 = Color3.fromHSV(i,1,1)
+        wait(0.01)
+    end
+end
+end)
+
+NoclipB.Name = "NoclipB"
+NoclipB.Parent = main
+NoclipB.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+NoclipB.Position = UDim2.new(0.621928155, 0, 0.222627744, 0)
+NoclipB.Size = UDim2.new(0, 200, 0, 50)
+NoclipB.Font = Enum.Font.ArialBold
+NoclipB.Text = "Noclip[off]"
+NoclipB.TextColor3 = Color3.fromRGB(255, 255, 255)
+NoclipB.TextSize = 35.000
+NoclipB.MouseButton1Click:connect(function()
+if NoclipB.Text == "Noclip[off]" then 
+noclip = true 
+NoclipB.Text = "Noclip[on]"
+game:GetService('RunService').Stepped:connect(function()
+if noclip then
+game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+		         end
+        end)
+    elseif NoclipB.Text == "Noclip[on]" then
+        noclip = false
+    NoclipB.Text = "Noclip[off]"
+    elseif NoclipB.Text == "Noclip[off]" then 
+	noclip = true 
+NoclipB.Text = "Noclip[on]"
+        
+    end
+end)
