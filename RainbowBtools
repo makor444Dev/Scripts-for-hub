@@ -132,32 +132,3 @@ while _G.RainbowGlow do
         wait(0.01)
     end
 end
-end)
-
-NoclipB.Name = "NoclipB"
-NoclipB.Parent = main
-NoclipB.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-NoclipB.Position = UDim2.new(0.621928155, 0, 0.222627744, 0)
-NoclipB.Size = UDim2.new(0, 200, 0, 50)
-NoclipB.Font = Enum.Font.ArialBold
-NoclipB.Text = "Noclip[off]"
-NoclipB.TextColor3 = Color3.fromRGB(255, 255, 255)
-NoclipB.TextSize = 35.000
-NoclipB.MouseButton1Click:connect(function()
-if NoclipB.Text == "Noclip[off]" then 
-noclip = true 
-NoclipB.Text = "Noclip[on]"
-game:GetService('RunService').Stepped:connect(function()
-if noclip then
-game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
-		         end
-        end)
-    elseif NoclipB.Text == "Noclip[on]" then
-        noclip = false
-    NoclipB.Text = "Noclip[off]"
-    elseif NoclipB.Text == "Noclip[off]" then 
-	noclip = true 
-NoclipB.Text = "Noclip[on]"
-        
-    end
-end)
